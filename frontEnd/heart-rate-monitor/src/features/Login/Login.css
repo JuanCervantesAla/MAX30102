@@ -1,0 +1,127 @@
+.login-container {
+    max-width: 400px;
+    width: 100%;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-title {
+    text-align: center;
+    color: #333;
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+.login-label {
+    font-size: 19px;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.login-input {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+.login-input:focus {
+    border-color: #007ACC;
+    background-color: #fff;
+    outline: none;
+}
+
+.login-button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007ACC;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #005F99;
+}
+
+.login-signin-link {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+}
+
+.login-signin-link-button {
+    background-color: transparent;
+    color: #007ACC;
+    text-decoration: underline;
+    border: none;
+    cursor: pointer;
+}
+
+.login-signin-link-button:hover {
+    background-color: transparent;
+    color: #005F99;
+}
+
+
+@media (max-width: 768px) {
+    .login-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .login-title {
+        font-size: 20px;
+    }
+
+    .login-input {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .login-button {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .login-signin-link {
+        font-size: 12px;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .login-container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    .login-title {
+        font-size: 18px;
+    }
+
+    .login-input {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .login-button {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .login-signin-link {
+        font-size: 12px;
+    }
+}

@@ -32,15 +32,13 @@
     left: 50%;
     transform: translate(-50%, -50%);
     color: #fff;
-    font-size: 4rem;
+    font-size: 3.5rem;
     font-weight: bold;
     text-align: center;
     line-height: 1.4;
     letter-spacing: 1px;
     pointer-events: none;
 }
-
-
 
 .centered p {
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);

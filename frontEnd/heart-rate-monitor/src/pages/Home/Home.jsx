@@ -8,12 +8,13 @@ import cardiac from '../../assets/cardiac.png';
 import result from '../../assets/result.png';
 
 const Home = () => {
+
   return (
     <div className="HomeContainer">
       <NavBar />
       <div className="HomeContent">
         <img className="HomeImage" src={homeImage} alt="Home" />
-        <div className="centered"><p>Heart 4 All</p></div>
+        <div className="centered"><p>Medical Cardiac Sensor</p></div>
         <div className='cardContainer'>
           <Card
               title="Monitor Your Heartbeat"

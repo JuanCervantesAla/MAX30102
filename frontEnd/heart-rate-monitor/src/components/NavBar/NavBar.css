@@ -5,33 +5,35 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 4.5em; /* Ajustado para un diseño más compacto */
-  background-color: #f5f5f5; /* Suave fondo gris claro */
-  border-bottom: 2px solid #007ACC; /* Línea de separación azul profesional */
-  padding: 0 2%; /* Espaciado horizontal */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  width: 98%;
+  height: 4.5em;
+  background-color: #f5f5f5; 
+  border-bottom: 2px solid #007ACC; 
+  padding: 0 2%; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
   z-index: 1000;
 }
 
 .NavBarLeft {
   display: flex;
   align-items: center;
+  gap: 0.5em; 
 }
 
 .title {
-  font-size: 2em;
+  font-size: 1.8em; 
   font-weight: bold;
   color: #34495E;
   margin: 0;
-  text-transform: uppercase; /* Para un diseño más llamativo */
+  text-transform: uppercase;
   letter-spacing: 1px;
+  cursor: pointer;
 }
 
 .NavBarRight {
   display: flex;
   align-items: center;
-  gap: 1em; /* Espaciado entre botones */
+  gap: 1em; 
 }
 
 .medical-btn {
@@ -64,4 +66,33 @@
   background-color: #007ACC;
   color: #ffffff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+  width: 2.5em;
+  height: auto; 
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .NavBarContainer {
+    height: 4em;
+  }
+
+  .title {
+    font-size: 1.5em;
+  }
+
+  .NavBarRight {
+    gap: 0.5em;
+  }
+
+  .medical-btn {
+    padding: 0.4em 1em;
+    font-size: 0.9rem;
+  }
+
+  .logo {
+    width: 2em;
+  }
 }

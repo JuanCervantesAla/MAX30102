@@ -1,12 +1,19 @@
 import { useState } from 'react'
 import './App.css'
-import Home from './pages/Home/Home'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home/Home';
+import LogIn from './pages/Log-In/Log-In';
+import Register from './pages/Regis-Ter/Regis-Ter';
 
 function App() {
   return (
-    <div className='AppContainer'>
-      <Home />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home/>} />
+        <Route path="/LogIn" element={<LogIn />} /> 
+        <Route path="/Register" element={<Register />} /> 
+      </Routes>
+    </Router>
   );
 }
 

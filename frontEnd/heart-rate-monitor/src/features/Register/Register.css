@@ -1,0 +1,151 @@
+.register-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    padding-top: 40px;
+    background-color: #007cf7;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .login-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    width: 100%;
+  }
+  
+  .image-section {
+    width: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    padding: 20px;
+  }
+  
+  .register-form-container {
+    max-width: 400px;
+    width: 100%;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .register-title {
+    text-align: center;
+    color: #333;
+    font-size: 35px;
+    margin-bottom: 20px;
+  }
+  
+  .register-label {
+    font-size: 19px;
+    color: #555;
+    margin-bottom: 8px;
+  }
+  
+  .register-input {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9;
+  }
+  
+  .register-input:focus {
+    border-color: #007ACC;
+    background-color: #fff;
+    outline: none;
+  }
+  
+  .register-button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007ACC;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .register-button:hover {
+    background-color: #005F99;
+  }
+  
+  .register-signin-link {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .register-signin-link-button {
+    background-color: transparent;
+    color: #007ACC;
+    text-decoration: underline;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .register-signin-link-button:hover {
+    background-color: transparent;
+    color: #005F99;
+  }
+  
+  .image-section img {
+    border-radius: 50%;
+    width: 200px;  /* Width and height to avoid stretching */
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  @media (max-width: 768px) {
+    .register-container {
+      flex-direction: column;
+    }
+  
+    .login-section, .image-section {
+      width: 100%;
+    }
+  
+    .register-title {
+      font-size: 24px;
+    }
+  
+    .register-input {
+      font-size: 14px;
+      padding: 8px;
+    }
+  
+    .register-button {
+      font-size: 14px;
+      padding: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .register-title {
+      font-size: 20px;
+    }
+  
+    .register-input {
+      font-size: 12px;
+      padding: 6px;
+    }
+  
+    .register-button {
+      font-size: 12px;
+      padding: 8px;
+    }
+  }
+  

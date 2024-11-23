@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from './firebaseConfig';
+import { auth } from '../../config/firebaseConfig';
+import './Login.css';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -17,24 +18,36 @@ function Login() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="login-container">
+      <h2 className="login-title">Log - In</h2>
       <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button type="submit">Login</button>
+        <div>
+          <p className="login-label">Email:</p>
+          <input
+            className="login-input"
+            type="email"
+            placeholder="example@gmail.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <p className="login-label">Password:</p>
+          <input
+            className="login-input"
+            type="password"
+            placeholder="********"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button className="login-button" type="submit">Login</button>
+        <p className="login-signin-link">
+          Don't have an account? 
+          <button className="login-signin-link-button" type="button">Sign In</button>
+        </p>
       </form>
     </div>
   );
