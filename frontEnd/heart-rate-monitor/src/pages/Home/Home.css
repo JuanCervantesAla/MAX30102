@@ -1,0 +1,55 @@
+.HomeContainer {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.HomeContent {
+    flex-grow: 1;
+    position: relative;
+    text-align: center;
+}
+
+.HomeImage {
+    width: 100%;
+    height: 50vh;
+    position: relative; 
+}
+
+.HomeImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.centered {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 4rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.4;
+    letter-spacing: 1px;
+    pointer-events: none;
+}
+
+
+
+.centered p {
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
