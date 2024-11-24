@@ -1,0 +1,99 @@
+.NavBarContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 98%;
+    height: 4.5em;
+    background-color: #f5f5f5; 
+    border-bottom: 2px solid #007ACC; 
+    padding: 0 2%; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    z-index: 1000;
+  }
+  
+  .NavBarLeft {
+    display: flex;
+    align-items: center;
+    gap: 0.5em; 
+  }
+  
+  .title {
+    font-size: 1.8em; 
+    font-weight: bold;
+    color: #34495E;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+  }
+  
+  .NavBarRight {
+    display: flex;
+    align-items: center;
+    gap: 1em; 
+  }
+  
+  .medical-btn {
+    padding: 0.5em 1.2em;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .medical-btn-primary {
+    background-color: #007ACC;
+    color: #ffffff;
+  }
+  
+  .medical-btn-primary:hover {
+    background-color: #005F99;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .medical-btn-secondary {
+    background-color: #f5f5f5;
+    color: #007ACC;
+    border: 2px solid #007ACC;
+  }
+  
+  .medical-btn-secondary:hover {
+    background-color: #007ACC;
+    color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .logo {
+    width: 2.5em;
+    height: auto; 
+    object-fit: contain;
+  }
+  
+  @media (max-width: 768px) {
+    .NavBarContainer {
+      height: 4em;
+    }
+  
+    .title {
+      font-size: 1.5em;
+    }
+  
+    .NavBarRight {
+      gap: 0.5em;
+    }
+  
+    .medical-btn {
+      padding: 0.4em 1em;
+      font-size: 0.9rem;
+    }
+  
+    .logo {
+      width: 2em;
+    }
+  }
+  

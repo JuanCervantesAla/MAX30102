@@ -1,14 +1,21 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from 'firebase/firestore';
+import { getDatabase } from 'firebase/database';
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyBX_YlyQwySJbOZyQ3pFdnCpC0IJ4N-YzY",
+  authDomain: "heart4all.firebaseapp.com",
+  projectId: "heart4all",
+  storageBucket: "heart4all.firebasestorage.app",
+  messagingSenderId: "937937871695",
+  appId: "1:937937871695:web:6fffac05cb47b70c4f9b3a",
+  measurementId: "G-BZPBZ591M7"
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+export { auth, db };
+
