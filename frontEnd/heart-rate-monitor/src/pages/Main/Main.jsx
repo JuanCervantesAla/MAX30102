@@ -5,6 +5,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { addDoc } from 'firebase/firestore';
 import './Main.css';
 import Graph from '../../components/BPMGauge/BPMGauge.jsx';
+import HeartRateMonitor from '../../components/HeartRateMonitor/HeartRateMonitor';
 
 const Main = () => {
   const [email, setEmail] = useState('');
@@ -12,11 +13,11 @@ const Main = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [contactName, setContactName] = useState('');
   const [contactPhone, setContactPhone] = useState('');
-  const bpmData = [120, 125, 130, 135, 140, 145, 150, 155, 160, 165];
-  const [bpm, setBpm] = useState(0); // Para almacenar el BPM actual
-  const [bpmLowDuration, setBpmLowDuration] = useState(0); // Para almacenar la duración de los BPM bajos
-  const lowBpmThreshold = 60; // Definir el umbral de BPM bajos
-  const lowBpmTimeLimit = 1 * 60 * 1000; // 5 minutos en milisegundos
+  const [bpm, setBpm] = useState(0); // Estado para almacenar el BPM
+
+  const bpmLowDuration = 0;
+  const lowBpmThreshold = 60;
+  const lowBpmTimeLimit = 1 * 60 * 1000;
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -25,28 +26,20 @@ const Main = () => {
     }
 
     const fetchContacts = async () => {
-        try {
-          const querySnapshot = await getDocs(collection(db, 'contacts'));
-          const contactsList = querySnapshot.docs.map((doc) => {
-            const data = doc.data();
-            return { id: doc.id, ...data };
-          });
-          setContacts(contactsList);
-        } catch (error) {
-          console.error('Error fetching contacts:', error);
-        }
+      try {
+        const querySnapshot = await getDocs(collection(db, 'contacts'));
+        const contactsList = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return { id: doc.id, ...data };
+        });
+        setContacts(contactsList);
+      } catch (error) {
+        console.error('Error fetching contacts:', error);
+      }
     };
 
     fetchContacts();
   }, []); 
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setBpm(generateRandomBpm());
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
 
   useEffect(() => {
     let bpmLowTimer = null;
@@ -55,33 +48,10 @@ const Main = () => {
       if (bpmLowTimer === null) {
         bpmLowTimer = Date.now();
       }
-      setBpmLowDuration(Date.now() - bpmLowTimer);
     } else {
       bpmLowTimer = null;
-      setBpmLowDuration(0);
     }
-
-    if (bpmLowDuration >= lowBpmTimeLimit) {
-      sendAlertToContacts();
-    }
-  }, [bpm, bpmLowDuration]);
-
-  const generateRandomBpm = () => {
-    return Math.floor(Math.random() * 60);
-    //return Math.floor(Math.random() * 100) + 40;
-  };
-
-  const sendAlertToContacts = () => {
-    contacts.forEach(contact => {
-      sendMessage(contact);
-    });
-  };
-
-  const sendMessage = (contact) => {
-    // Aquí iría la lógica para enviar el mensaje al contacto.
-    // Puede ser un mensaje SMS, correo electrónico o notificación push.
-    console.log(`Sending alert to ${contact.name} at ${contact.phone}`);
-  };
+  }, [bpm]);
 
   const handleAddContact = async () => {
     try {
@@ -109,7 +79,8 @@ const Main = () => {
         return (
           <div>
             <h1>Hi {email}</h1>
-            <Graph/>
+            <HeartRateMonitor setBpm={setBpm} /> {/* Actualiza BPM */}
+            <Graph bpm={bpm} /> {/* Pasa BPM al Graph */}
             <p>Current BPM: {bpm}</p>
             {bpmLowDuration >= lowBpmTimeLimit && <p>ALERT: BPM is low for too long!</p>}
           </div>
@@ -184,3 +155,4 @@ const Main = () => {
 };
 
 export default Main;
+

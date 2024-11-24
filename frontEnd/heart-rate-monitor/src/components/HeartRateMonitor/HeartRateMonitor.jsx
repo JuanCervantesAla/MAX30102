@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Heart, Activity, AlertCircle } from "lucide-react";
 
-const HeartRateMonitor = () => {
-  const [bpm, setBpm] = useState("--");
+const HeartRateMonitor = ({ setBpm }) => {
+  const [bpm, setBpmLocal] = useState("--");
   const [avgBpm, setAvgBpm] = useState("--");
   const [error, setError] = useState(null);
   const [status, setStatus] = useState("loading");
@@ -22,10 +22,11 @@ const HeartRateMonitor = () => {
       const response = await fetch(`http://${esp32IP}/getBPM`);
       if (response.ok) {
         const data = await response.json();
-        setBpm(data.bpm);
+        setBpmLocal(data.bpm);  // Actualizar BPM local
         setAvgBpm(data.avg_bpm);
         setError(null);
         setStatus("success");
+        setBpm(data.bpm);  // Enviar al componente principal
       } else {
         throw new Error("Error al obtener los datos del ESP32");
       }
@@ -54,35 +55,20 @@ const HeartRateMonitor = () => {
         <div className="p-4">
           {status === "error" ? (
             <div className="bg-red-50 border border-red-200 text-red-600 p-4 rounded-lg flex items-center gap-2">
-              <AlertCircle className="w-5 h-5" />
+              <AlertCircle className="w-6 h-6" />
               <span>{error}</span>
             </div>
           ) : (
-            <div className="space-y-6">
-              <div className="text-center p-6 bg-gray-50 rounded-lg">
-                <div className="text-4xl font-bold mb-2">
-                  <span className={getBPMColor(bpm)}>{bpm}</span>
-                  <span className="text-lg text-gray-500 ml-2">BPM</span>
-                </div>
-                <div className="flex items-center justify-center gap-2">
-                  <Activity className="w-5 h-5 text-blue-500" />
-                  <span className="text-gray-600">Frecuencia en tiempo real</span>
-                </div>
+            <>
+              <div className="mb-4">
+                <p className="text-3xl font-semibold text-center text-gray-800">
+                  {bpm} BPM
+                </p>
+                <p className={`text-center ${getBPMColor(bpm)}`}>
+                  {avgBpm} BPM Promedio
+                </p>
               </div>
-
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <div className="text-center">
-                  <p className="text-gray-600 mb-1">Promedio</p>
-                  <p className="text-2xl font-semibold text-blue-600">{avgBpm} BPM</p>
-                </div>
-              </div>
-
-              {status === "loading" && (
-                <div className="text-center text-sm text-gray-500">
-                  Actualizando datos...
-                </div>
-              )}
-            </div>
+            </>
           )}
         </div>
       </div>

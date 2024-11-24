@@ -1,20 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import GaugeChart from 'react-gauge-chart';
 
-const BPMGauge = () => {
-  const [bpm, setBPM] = useState(60);
+const BPMGauge = ({ bpm }) => {
   const maxBPM = 200;
-
-  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      
-      const newBPM = Math.floor(Math.random() * (200 - 50 + 1)) + 50;
-      setBPM(newBPM);
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   const normalizedBPM = bpm / maxBPM;
 
