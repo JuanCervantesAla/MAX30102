@@ -1,42 +1,109 @@
 .mainContainer {
-    width: 100%;
-    height: auto;
-    background-color: #fafcf9;
-    box-shadow: 0 12px 18px rgba(0, 0, 0, 0.3);
-  }
-  
-  .tabs {
-    padding-top: 7%;
-    display: flex;
-    background-color: #f4f4f4;
-    border-bottom: 2px solid #ccc;
-  }
-  
-  .tab {
-    flex: 1;
-    padding: 10px 20px;
-    cursor: pointer;
-    text-align: center;
-    background-color: #f4f4f4;
-    border: none;
-    outline: none;
-    transition: background-color 0.3s;
-  }
-  
-  .tab:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .tab.active {
-    background-color: #fff;
-    border-top: 2px solid #0078D7;
-    border-left: 2px solid #0078D7;
-    border-right: 2px solid #0078D7;
-    font-weight: bold;
-  }
-  
-  .tab-content {
-    padding: 20px;
-    background-color: #fff;
-  }
-  
+  width: 100%;
+  height: auto;
+  background-color: #fafcf9;
+  box-shadow: 0 12px 18px rgba(0, 0, 0, 0.3);
+}
+
+.tabs {
+  padding-top: 7%;
+  display: flex;
+  background-color: #f4f4f4;
+  border-bottom: 2px solid #ccc;
+}
+
+.tab {
+  flex: 1;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  background-color: #f4f4f4;
+  border: none;
+  outline: none;
+  transition: background-color 0.3s;
+}
+
+.tab:hover {
+  background-color: #e0e0e0;
+}
+
+.tab.active {
+  background-color: #fff;
+  border-top: 2px solid #0078D7;
+  border-left: 2px solid #0078D7;
+  border-right: 2px solid #0078D7;
+  font-weight: bold;
+}
+
+.tab-content {
+  padding: 20px;
+  background-color: #fff;
+}
+
+.contacts-container {
+  padding: 20px;
+}
+
+.contacts-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.contact-item {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contact-name {
+  font-weight: bold;
+}
+
+.contact-phone {
+  color: #555;
+}
+
+.contact-form {
+  margin-top: 20px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  font-weight: bold;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-contact-btn {
+  background-color: #0078D7;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.add-contact-btn:hover {
+  background-color: #005fa3;
+}
+
+.alert {
+  color: red;
+  font-weight: bold;
+}

@@ -19,7 +19,6 @@ const NavBar = () => {
         <p className='title' onClick={goToHome}>Heart4All</p>
       </div>
       <div className='NavBarRight'>
-        Aqui va tu perfil
       </div>
     </div>
   );

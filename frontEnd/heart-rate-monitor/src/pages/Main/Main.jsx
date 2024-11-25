@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import NavBar from '../../components/NavBarLogged/NavBarLogged';
-import { auth, db } from '../../config/firebaseConfig'; 
-import { collection, getDocs } from 'firebase/firestore';
-import { addDoc } from 'firebase/firestore';
+import { auth, db } from '../../config/firebaseConfig';
+import { collection, getDocs, addDoc } from 'firebase/firestore';
+import axios from 'axios';
+import * as tf from '@tensorflow/tfjs';
 import './Main.css';
 import Graph from '../../components/BPMGauge/BPMGauge.jsx';
 import HeartRateMonitor from '../../components/HeartRateMonitor/HeartRateMonitor';
+import { GoogleGenerativeAI } from '@google/generative-ai';  
 
 const Main = () => {
   const [email, setEmail] = useState('');
@@ -13,11 +15,15 @@ const Main = () => {
   const [activeTab, setActiveTab] = useState('home');
   const [contactName, setContactName] = useState('');
   const [contactPhone, setContactPhone] = useState('');
-  const [bpm, setBpm] = useState(0); // Estado para almacenar el BPM
+  const [bpm, setBpm] = useState(0);
+  const [age, setAge] = useState(0);
+  const [analysisResult, setAnalysisResult] = useState(null);
 
-  const bpmLowDuration = 0;
   const lowBpmThreshold = 60;
-  const lowBpmTimeLimit = 1 * 60 * 1000;
+
+  
+  const genAI = new GoogleGenerativeAI('AIzaSyBPUpcwdmlPLkXP-VU5gk5pQEnk3WajXLA');
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
   useEffect(() => {
     const user = auth.currentUser;
@@ -39,19 +45,37 @@ const Main = () => {
     };
 
     fetchContacts();
-  }, []); 
+  }, []);
 
-  useEffect(() => {
-    let bpmLowTimer = null;
-
-    if (bpm < lowBpmThreshold) {
-      if (bpmLowTimer === null) {
-        bpmLowTimer = Date.now();
+  const analyzeBpm = async () => {
+    if (bpm && age) {
+      try {
+        const prompt = `Analyze the BPM of ${bpm} and age ${age}, and provide a recommendation for fitness or health, make the response in 100 words, make some suggestions`;
+  
+        const result = await model.generateContent(prompt);
+  
+        
+        let recommendation = result.response.text();
+  
+        
+        recommendation = recommendation
+          .replace(/\*/g, '');
+          
+  
+        setAnalysisResult({
+          status: 'Success',
+          recommendation: recommendation,
+        });
+  
+      } catch (error) {
+        console.error('Error generating content with Google Generative AI:', error);
+        setAnalysisResult({
+          status: 'Error',
+          recommendation: 'There was an issue with the analysis request.',
+        });
       }
-    } else {
-      bpmLowTimer = null;
     }
-  }, [bpm]);
+  };  
 
   const handleAddContact = async () => {
     try {
@@ -79,40 +103,103 @@ const Main = () => {
         return (
           <div>
             <h1>Hi {email}</h1>
-            <HeartRateMonitor setBpm={setBpm} /> {/* Actualiza BPM */}
-            <Graph bpm={bpm} /> {/* Pasa BPM al Graph */}
-            <p>Current BPM: {bpm}</p>
-            {bpmLowDuration >= lowBpmTimeLimit && <p>ALERT: BPM is low for too long!</p>}
+            <HeartRateMonitor setBpm={setBpm} />
+            <Graph bpm={bpm} />
+            {bpm < lowBpmThreshold && (
+              <p className="alert">ALERT: BPM is too low!</p>
+            )}
           </div>
         );
-      case 'profile':
-        return <p>Perfil del usuario: {email}</p>;
+        case 'profile':
+          return (
+            <div className="ai-analysis-container">
+              <h2 className="ai-analysis-title">IA Analysis</h2>
+              <div className="ai-analysis-content">
+                <div className="input-group">
+                  <label>Enter your average BPM:</label>
+                  <input
+                    type="number"
+                    value={bpm}
+                    onChange={(e) => setBpm(Number(e.target.value))}
+                    className="input-field"
+                    placeholder="BPM"
+                  />
+                </div>
+                <div className="input-group">
+                  <label>Enter your age:</label>
+                  <input
+                    type="number"
+                    value={age}
+                    onChange={(e) => setAge(Number(e.target.value))}
+                    className="input-field"
+                    placeholder="Age"
+                  />
+                </div>
+                <button onClick={analyzeBpm} className="analyze-btn">
+                  Analyze
+                </button>
+              </div>
+              
+              {analysisResult && (
+                <div className="analysis-result">
+                  <p className="status">{analysisResult.status}</p>
+                  <p className="recommendation">{analysisResult.recommendation}</p>
+                </div>
+              )}
+            </div>
+          );
       case 'contacts':
         return (
-          <div>
-            <p>Emergency contacts</p>
-            <p>Add emergency contacts, they'll get an alert message if your bpm are low</p>
-            <p>Mis contactos:</p>
-            <ul>
+          <div className="contacts-container">
+            <h2>Emergency Contacts</h2>
+            <p>Add emergency contacts, they'll get an alert message if your bpm is low</p>
+            <h3>My Contacts</h3>
+            <ul className="contacts-list">
               {contacts.length === 0 ? (
                 <p>No contacts available</p>
               ) : (
                 contacts.map((contact) => (
-                  <li key={contact.id}>
-                    {contact.name} - {contact.phone}
+                  <li key={contact.id} className="contact-item">
+                    <span className="contact-name">{contact.name}</span>
+                    <span className="contact-phone">{contact.phone}</span>
                   </li>
                 ))
               )}
             </ul>
-            <form>
-              <p>Name: <input value={contactName} onChange={(e) => setContactName(e.target.value)} /></p>
-              <p>Phone: <input value={contactPhone} onChange={(e) => setContactPhone(e.target.value)} /></p>
-            </form>
-            <button onClick={handleAddContact}>Add a contact</button>
+            <div className="contact-form">
+              <h4>Add New Contact</h4>
+              <form>
+                <div className="input-group">
+                  <label>Name:</label>
+                  <input 
+                    type="text" 
+                    value={contactName} 
+                    onChange={(e) => setContactName(e.target.value)} 
+                    placeholder="Enter contact name"
+                  />
+                </div>
+                <div className="input-group">
+                  <label>Phone:</label>
+                  <input 
+                    type="text" 
+                    value={contactPhone} 
+                    onChange={(e) => setContactPhone(e.target.value)} 
+                    placeholder="Enter contact phone number"
+                  />
+                </div>
+                <button 
+                  type="button" 
+                  onClick={handleAddContact} 
+                  className="add-contact-btn"
+                >
+                  Add Contact
+                </button>
+              </form>
+            </div>
           </div>
         );
       case 'howToUse':
-        return <p>Como usar</p>;
+        return <p>How to use this application?</p>;
       default:
         return null;
     }
@@ -132,19 +219,13 @@ const Main = () => {
           className={`tab ${activeTab === 'profile' ? 'active' : ''}`}
           onClick={() => setActiveTab('profile')}
         >
-          IA Analisys
+          IA Analysis
         </button>
         <button
           className={`tab ${activeTab === 'contacts' ? 'active' : ''}`}
           onClick={() => setActiveTab('contacts')}
         >
           Contacts
-        </button>
-        <button
-          className={`tab ${activeTab === 'howToUse' ? 'active' : ''}`}
-          onClick={() => setActiveTab('howToUse')}
-        >
-          How to Use?
         </button>
       </div>
       <div className="tab-content">
@@ -155,4 +236,3 @@ const Main = () => {
 };
 
 export default Main;
-
